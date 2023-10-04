@@ -12,4 +12,18 @@ export class JokeEntity extends BaseEntity implements IJoke {
     nullable: true
   })
   content?: string;
+
+  @Column({
+    name: 'upvote',
+    type: 'numeric',
+    default: 0
+  })
+  upvote?: number;
+
+  @Column({
+    name: 'downvote',
+    type: 'numeric',
+    default: 0
+  })
+  downvote?: number;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JokeEntity } from 'src/_core/entities';
-import { Repository } from 'typeorm';
+import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class JokesRepository {
@@ -10,8 +10,19 @@ export class JokesRepository {
     private readonly repo: Repository<JokeEntity>
   ) {}
 
-  async findAll(): Promise<JokeEntity[]> {
-    const result =  await this.repo.find();
-    return result
+  async findAll(options?: FindManyOptions<JokeEntity>): Promise<JokeEntity[]> {
+    return await this.repo.find(options);
+  }
+
+  async findOne(options?: FindOneOptions<JokeEntity>): Promise<JokeEntity> {
+    return await this.repo.findOne(options);
+  }
+
+  async update(id: string, body: Partial<JokeEntity>): Promise<JokeEntity> {
+    return await this.repo.save({ ...body, id });
+  }
+
+  createQueryBuilder() {
+    return this.repo.createQueryBuilder('jokes');
   }
 }
