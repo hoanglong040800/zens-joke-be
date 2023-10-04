@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { JokeDto } from 'src/database';
+import { JokeDto } from 'src/_core';
 import { JokesService } from './jokes.service';
 import { JokesRepository } from './jokes.repository';
 

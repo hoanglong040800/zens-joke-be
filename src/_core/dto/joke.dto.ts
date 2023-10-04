@@ -3,7 +3,7 @@ import { IJoke } from '../interface';
 
 export class JokeDto implements IJoke {
   @IsNotEmpty()
-  id: string;
+  id: number;
 
   @IsOptional()
   content?: string;
