@@ -18,8 +18,15 @@ export class JokesRepository {
     return await this.repo.findOne(options);
   }
 
-  async update(id: string, body: Partial<JokeEntity>): Promise<JokeEntity> {
-    return await this.repo.save({ ...body, id });
+  async updateVote(
+    id: string,
+    key: keyof Pick<JokeEntity, 'upvote' | 'downvote'>,
+  ) {
+    await this.repo.update(id, {
+      [key]: () => `${key} + 1`
+    });
+
+    return true
   }
 
   createQueryBuilder() {
