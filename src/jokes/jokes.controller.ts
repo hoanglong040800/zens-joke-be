@@ -1,6 +1,8 @@
 import {
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -30,11 +32,23 @@ export class JokesController {
 
   @Patch('/:id/upvote')
   async increaseUpvote(@Param() param): Promise<boolean> {
-    return await this.repo.updateVote(param.id, 'upvote');
+    const result = await this.repo.updateVote(param.id, 'upvote');
+
+    if (!result) {
+      throw new HttpException('Id not found', HttpStatus.NOT_FOUND);
+    }
+
+    return result;
   }
 
   @Patch('/:id/downvote')
   async increaseDownvote(@Param() param): Promise<boolean> {
-    return await this.repo.updateVote(param.id, 'downvote');
+    const result = await this.repo.updateVote(param.id, 'downvote');
+
+    if (!result) {
+      throw new HttpException('Id not found', HttpStatus.NOT_FOUND);
+    }
+
+    return result;
   }
 }

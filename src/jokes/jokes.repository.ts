@@ -20,13 +20,17 @@ export class JokesRepository {
 
   async updateVote(
     id: string,
-    key: keyof Pick<JokeEntity, 'upvote' | 'downvote'>,
+    key: keyof Pick<JokeEntity, 'upvote' | 'downvote'>
   ) {
-    await this.repo.update(id, {
+    const result = await this.repo.update(id, {
       [key]: () => `${key} + 1`
     });
 
-    return true
+    if (result.affected === 0) {
+      return false
+    }
+
+    return true;
   }
 
   createQueryBuilder() {
