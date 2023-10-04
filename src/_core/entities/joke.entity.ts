@@ -1,11 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { IJoke } from '../interface';
+import { BaseEntity } from './base.entity';
 
-@Entity()
-export class JokeEntity implements IJoke {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ nullable: true })
+@Entity({
+  name: 'jokes'
+})
+export class JokeEntity extends BaseEntity implements IJoke {
+  @Column({
+    name: 'content',
+    type: 'character varying',
+    nullable: true
+  })
   content?: string;
 }

@@ -1,17 +1,17 @@
 import { Controller, Get } from '@nestjs/common';
-import { JokeDto } from 'src/_core';
 import { JokesService } from './jokes.service';
 import { JokesRepository } from './jokes.repository';
+import { JokeEntity } from 'src/_core/entities';
 
 @Controller('jokes')
 export class JokesController {
   constructor(
-    private readonly jokeService: JokesService,
-    private readonly jokesRepo: JokesRepository
+    private readonly service: JokesService,
+    private readonly repo: JokesRepository
   ) {}
 
   @Get()
-  findAll(): JokeDto {
-    return null;
+  async findAll(): Promise<JokeEntity[]> {
+    return await this.repo.findAll();
   }
 }

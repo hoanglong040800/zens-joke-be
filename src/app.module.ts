@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { JokesModule } from './jokes/jokes.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Env, IPostgresEnv } from './_core';
+import { IPostgresEnv } from './_core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+
+console.log(__dirname + '/_core/entities/*.entity..ts');
 
 @Module({
   imports: [
@@ -20,7 +22,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
-        entities: [__dirname + '_core/entities/*.entity{.ts,.js}']
+        entities: [__dirname + '/_core/entities/*.js'],
+
+        // create schema auto
+        synchronize: true
       })
     }),
 
