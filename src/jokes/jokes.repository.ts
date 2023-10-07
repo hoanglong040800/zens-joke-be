@@ -27,13 +27,13 @@ export class JokesRepository {
     });
 
     if (result.affected === 0) {
-      return false
+      return false;
     }
 
     return true;
   }
 
-  createQueryBuilder() {
-    return this.repo.createQueryBuilder('jokes');
+  createQueryBuilder(alias?: string) {
+    return this.repo.createQueryBuilder(alias);
   }
 }

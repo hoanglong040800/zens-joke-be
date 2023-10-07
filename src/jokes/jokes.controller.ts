@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Header,
   HttpException,
   HttpStatus,
   Param,
@@ -12,6 +13,9 @@ import {
 import { JokesService } from './jokes.service';
 import { JokesRepository } from './jokes.repository';
 import { JokeEntity } from 'src/_core/entities';
+import { CookieKey } from 'src/_core';
+import { JSONCookie } from 'cookie-parser';
+import { parseJsonCookie } from 'src/_core/utils';
 
 @Controller('jokes')
 export class JokesController {
@@ -26,8 +30,23 @@ export class JokesController {
   }
 
   @Post('/random')
-  async findNextRandomJoke(@Req() req): Promise<JokeEntity> {
-    return await this.service.getOneRandomJoke(req.body.readJokeIds);
+  async findNextRandomJoke(@Req() req): Promise<JokeEntity | {}> {
+    try {
+      const readJokeIds = parseJsonCookie<string[]>(
+        req.cookies,
+        CookieKey.readJokeIds
+      );
+
+      const result = await this.service.getOneRandomJoke(readJokeIds);
+
+      if (!result) {
+        return {};
+      }
+
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   @Patch('/:id/upvote')

@@ -8,7 +8,10 @@ export class JokesService {
   constructor(private readonly repo: JokesRepository) {}
 
   async getOneRandomJoke(readJokeIds?: string[]): Promise<JokeEntity> {
-    const queryBuilder = this.repo.createQueryBuilder().orderBy('RANDOM()');
+    const queryBuilder = this.repo
+      .createQueryBuilder('j')
+      .orderBy('RANDOM()')
+      .select(['j.content', 'j.id']);
 
     if (readJokeIds) {
       queryBuilder.where({
