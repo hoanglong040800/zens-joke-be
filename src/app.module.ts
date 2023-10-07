@@ -4,8 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { IPostgresEnv } from './_core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-console.log(__dirname + '/_core/entities/*.entity..ts');
-
 @Module({
   imports: [
     ConfigModule.forRoot({
