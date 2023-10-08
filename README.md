@@ -1,5 +1,7 @@
 # ZenS Jokes BE
 
+- Go to [Frontend repo](https://github.com/hoanglong040800/zens-joke-fe) for demo
+
 Install packages
 ```
 yarn
