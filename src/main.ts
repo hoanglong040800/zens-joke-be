@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { CORS_WHITE_LIST } from './_core';
 import * as cookieParser from 'cookie-parser';
+import { ResponseFormatInterceptor } from './_core/interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +14,7 @@ async function bootstrap() {
   });
 
   app.use(cookieParser());
+  app.useGlobalInterceptors(new ResponseFormatInterceptor());
 
   await app.listen(5000);
 }
